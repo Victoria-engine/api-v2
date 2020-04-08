@@ -20,10 +20,10 @@ func (s *Server) initializeRoutes() {
 	//// User routes
 	userRoutes := s.Router.PathPrefix("/api/users").Subrouter()
 	userRoutes.HandleFunc("/{id}", middlewares.SetMiddlewareJSON(s.GetUserInfo)).Methods("GET")
+	userRoutes.HandleFunc("/{id}", middlewares.SetMiddlewareAuthentication(s.DeleteUser)).Methods("DELETE")
 
 	// s.Router.HandleFunc("/users", middlewares.SetMiddlewareJSON(s.CreateUser)).Methods("POST")
 	// s.Router.HandleFunc("/users", middlewares.SetMiddlewareJSON(s.GetUsers)).Methods("GET")
 	// s.Router.HandleFunc("/users/{id}", middlewares.SetMiddlewareJSON(s.GetUser)).Methods("GET")
 	// s.Router.HandleFunc("/users/{id}", middlewares.SetMiddlewareJSON(middlewares.SetMiddlewareAuthentication(s.UpdateUser))).Methods("PUT")
-	// s.Router.HandleFunc("/users/{id}", middlewares.SetMiddlewareAuthentication(s.DeleteUser)).Methods("DELETE")
 }
