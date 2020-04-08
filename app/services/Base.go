@@ -1,4 +1,4 @@
-package controllers
+package services
 
 import (
 	"fmt"
@@ -45,6 +45,6 @@ func (server *Server) Initialize(Dbdriver, DbUser, DbPassword, DbPort, DbHost, D
 
 // Run : Runs and serves the server instance
 func (server *Server) Run(addr string) {
-	fmt.Println("Listening to port 8080")
+	fmt.Printf("Listening on %s\n", addr)
 	log.Fatal(http.ListenAndServe(addr, server.Router))
 }

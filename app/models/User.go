@@ -33,7 +33,7 @@ func (u *User) BeforeSave() error {
 	return nil
 }
 
-// Prepare : Prepare
+// Prepare : Initialzes a user model
 func (u *User) Prepare() {
 	u.ID = 0
 	u.FirstName = html.EscapeString(strings.TrimSpace(u.FirstName))

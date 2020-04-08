@@ -5,12 +5,12 @@ import (
 	"log"
 	"os"
 
-	"github.com/Victoria-engine/api-v2/app/controllers"
 	"github.com/Victoria-engine/api-v2/app/seed"
+	"github.com/Victoria-engine/api-v2/app/services"
 	"github.com/joho/godotenv"
 )
 
-var server = controllers.Server{}
+var server = services.Server{}
 
 // Run : Runs the REST API
 func Run() {
@@ -35,5 +35,5 @@ func Run() {
 
 	seed.Load(server.DB)
 
-	server.Run(":8080")
+	server.Run(fmt.Sprintf(":%s", os.Getenv("PORT")))
 }
