@@ -5,7 +5,7 @@ import (
 	"log"
 	"net/http"
 
-	"github.com/Victoria-engine/api/app/models"
+	"github.com/Victoria-engine/api-v2/app/models"
 	"github.com/gorilla/mux"
 	"github.com/jinzhu/gorm"
 
@@ -29,14 +29,14 @@ func (server *Server) Initialize(Dbdriver, DbUser, DbPassword, DbPort, DbHost, D
 		server.DB, err = gorm.Open(Dbdriver, DBURL)
 
 		if err != nil {
-			fmt.Printf("Cannot connect to %s database", Dbdriver)
+			fmt.Printf("Cannot connect to %s database!\n", Dbdriver)
 			log.Fatal("This is the error:", err)
 		} else {
-			fmt.Printf("We are connected to the %s database", Dbdriver)
+			fmt.Printf("Connected to the %s database! \n", Dbdriver)
 		}
 	}
 
-	server.DB.Debug().AutoMigrate(&models.User, &models.Post) //database migration
+	server.DB.Debug().AutoMigrate(&models.User{}, &models.Post{}) //database migration
 
 	server.Router = mux.NewRouter()
 

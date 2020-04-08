@@ -4,8 +4,8 @@ import (
 	"errors"
 	"net/http"
 
-	"github.com/Victoria-engine/api/app/auth"
-	"github.com/Victoria-engine/api/app/responses"
+	"github.com/Victoria-engine/api-v2/app/auth"
+	"github.com/Victoria-engine/api-v2/app/responses"
 )
 
 // SetMiddlewareJSON : Converts the requests to JSON format

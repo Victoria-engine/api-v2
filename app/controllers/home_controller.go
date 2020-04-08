@@ -3,7 +3,7 @@ package controllers
 import (
 	"net/http"
 
-	"github.com/Victoria-engine/api/app/responses"
+	"github.com/Victoria-engine/api-v2/app/responses"
 )
 
 // Home : Home

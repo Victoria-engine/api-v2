@@ -1,4 +1,4 @@
-module github.com/Victoria-engine/api
+module github.com/Victoria-engine/api-v2
 
 go 1.14
 

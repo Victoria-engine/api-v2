@@ -12,7 +12,7 @@ type User struct {
 	LastName   string `gorm:"size:100;not null;" json:"last_name"`
 	Email      string `gorm:"size:150;not null;unique" json:"email"`
 	Password   string `gorm:"size:100;not null;" json:"password"`
-	BlogID     uint32 `json:"blog_id"`
+	BlogID     int    `json:"blog_id"`
 }
 
 // HashPassword : Hashes the a password

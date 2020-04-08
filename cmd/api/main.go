@@ -5,8 +5,8 @@ import (
 	"log"
 	"os"
 
-	"github.com/Victoria-engine/api/app/controllers"
-	"github.com/Victoria-engine/api/app/seed"
+	"github.com/Victoria-engine/api-v2/app/controllers"
+	"github.com/Victoria-engine/api-v2/app/seed"
 	"github.com/joho/godotenv"
 )
 
@@ -21,13 +21,19 @@ func Run() {
 	if err != nil {
 		log.Fatalf("Error getting env, not comming through %v", err)
 	} else {
-		fmt.Println("We are getting the env values")
+		fmt.Println("Got the env values !")
 	}
 
-	server.Initialize(os.Getenv("DB_DRIVER"), os.Getenv("DB_USER"), os.Getenv("DB_PASSWORD"), os.Getenv("DB_PORT"), os.Getenv("DB_HOST"), os.Getenv("DB_NAME"))
+	server.Initialize(
+		os.Getenv("DB_DRIVER"),
+		os.Getenv("DB_USER"),
+		os.Getenv("DB_PASSWORD"),
+		os.Getenv("DB_PORT"),
+		os.Getenv("DB_HOST"),
+		os.Getenv("DB_NAME"),
+	)
 
 	seed.Load(server.DB)
 
 	server.Run(":8080")
-
 }

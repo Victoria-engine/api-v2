@@ -1,6 +1,6 @@
 package controllers
 
-import "github.com/Victoria-engine/api/app/middlewares"
+import "github.com/Victoria-engine/api-v2/app/middlewares"
 
 func (s *Server) initializeRoutes() {
 
