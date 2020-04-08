@@ -57,6 +57,7 @@ func (server *Server) CreateUser(w http.ResponseWriter, r *http.Request) {
 func (server *Server) GetUserInfo(w http.ResponseWriter, r *http.Request) {
 
 	vars := mux.Vars(r)
+
 	uid, err := strconv.ParseUint(vars["id"], 10, 32)
 	if err != nil {
 		responses.ERROR(w, http.StatusBadRequest, err)
@@ -71,9 +72,9 @@ func (server *Server) GetUserInfo(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	output := presenters.GetUserInfoPresenter(foundUser)
+	res := presenters.GetUserInfoPresenter(foundUser)
 
-	responses.JSON(w, http.StatusOK, output)
+	responses.JSON(w, http.StatusOK, res)
 }
 
 // UpdateUser : Updates a user

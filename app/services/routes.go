@@ -3,12 +3,22 @@ package services
 import "github.com/Victoria-engine/api-v2/app/middlewares"
 
 func (s *Server) initializeRoutes() {
-	// 	// Login Route
-	// 	s.Router.HandleFunc("/login", middlewares.SetMiddlewareJSON(s.Login)).Methods("POST")
-
 	//// Auth routes
+	s.Router.HandleFunc("/api/auth/login", middlewares.SetMiddlewareJSON(s.Login)).Methods("POST")
 
 	//// Content routes
+	contentRoutes := s.Router.PathPrefix("/api/content").Subrouter()
+	// Blog
+	blogRoutes := contentRoutes.PathPrefix("/blog").Subrouter()
+
+	blogRoutes.HandleFunc("/",
+		middlewares.SetMiddlewareJSON(
+			middlewares.SetMiddlewareAuthentication(s.GetBlogData),
+		),
+	).Methods("GET")
+
+	// Post
+	//postRoutes := contentRoutes.PathPrefix("/post").Subrouter()
 
 	// Posts routes
 	// s.Router.HandleFunc("/posts", middlewares.SetMiddlewareJSON(s.CreatePost)).Methods("POST")
@@ -19,8 +29,18 @@ func (s *Server) initializeRoutes() {
 
 	//// User routes
 	userRoutes := s.Router.PathPrefix("/api/users").Subrouter()
-	userRoutes.HandleFunc("/{id}", middlewares.SetMiddlewareJSON(s.GetUserInfo)).Methods("GET")
-	userRoutes.HandleFunc("/{id}", middlewares.SetMiddlewareAuthentication(s.DeleteUser)).Methods("DELETE")
+
+	userRoutes.HandleFunc("/{id}",
+		middlewares.SetMiddlewareJSON(
+			middlewares.SetMiddlewareAuthentication(s.GetUserInfo),
+		),
+	).Methods("GET")
+
+	userRoutes.HandleFunc("/{id}",
+		middlewares.SetMiddlewareJSON(
+			middlewares.SetMiddlewareAuthentication(s.DeleteUser),
+		),
+	).Methods("DELETE")
 
 	// s.Router.HandleFunc("/users", middlewares.SetMiddlewareJSON(s.CreateUser)).Methods("POST")
 	// s.Router.HandleFunc("/users", middlewares.SetMiddlewareJSON(s.GetUsers)).Methods("GET")
