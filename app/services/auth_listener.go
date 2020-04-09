@@ -2,6 +2,7 @@ package services
 
 import (
 	"encoding/json"
+	"fmt"
 	"io/ioutil"
 	"net/http"
 
@@ -106,7 +107,7 @@ func (server *Server) Register(w http.ResponseWriter, r *http.Request) {
 
 	freshUser, err := user.SaveUser(server.DB)
 	if err != nil {
-		responses.ERROR(w, http.StatusUnprocessableEntity, err)
+		responses.ERROR(w, http.StatusUnprocessableEntity, fmt.Errorf("User email already exists"))
 		return
 	}
 
