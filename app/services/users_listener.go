@@ -5,7 +5,6 @@ import (
 	"errors"
 	"fmt"
 	"io/ioutil"
-	"log"
 	"net/http"
 	"strconv"
 
@@ -19,7 +18,11 @@ import (
 
 // CreateUser : Creates a new user
 func (server *Server) CreateUser(w http.ResponseWriter, r *http.Request) {
-	log.Println("HEREEE")
+	if r.Method != http.MethodPost {
+		w.WriteHeader(405) // Method not allowed
+		return
+	}
+
 	body, err := ioutil.ReadAll(r.Body)
 	if err != nil {
 		responses.ERROR(w, http.StatusUnprocessableEntity, err)
@@ -55,7 +58,6 @@ func (server *Server) CreateUser(w http.ResponseWriter, r *http.Request) {
 
 // GetUserInfo : Gets the user information
 func (server *Server) GetUserInfo(w http.ResponseWriter, r *http.Request) {
-
 	vars := mux.Vars(r)
 
 	uid, err := strconv.ParseUint(vars["id"], 10, 32)
@@ -79,6 +81,10 @@ func (server *Server) GetUserInfo(w http.ResponseWriter, r *http.Request) {
 
 // UpdateUser : Updates a user
 func (server *Server) UpdateUser(w http.ResponseWriter, r *http.Request) {
+	if r.Method != http.MethodPut {
+		w.WriteHeader(405) // Method not allowed
+		return
+	}
 
 	vars := mux.Vars(r)
 	uid, err := strconv.ParseUint(vars["id"], 10, 32)
@@ -132,6 +138,10 @@ func (server *Server) UpdateUser(w http.ResponseWriter, r *http.Request) {
 
 // DeleteUser : Deletes a user
 func (server *Server) DeleteUser(w http.ResponseWriter, r *http.Request) {
+	if r.Method != http.MethodDelete {
+		w.WriteHeader(405) // Method not allowed
+		return
+	}
 
 	vars := mux.Vars(r)
 

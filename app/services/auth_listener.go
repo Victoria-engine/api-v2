@@ -15,6 +15,11 @@ import (
 
 // Login : Login a user
 func (server *Server) Login(w http.ResponseWriter, r *http.Request) {
+	if r.Method != http.MethodPost {
+		w.WriteHeader(405) // Method not allowed
+		return
+	}
+
 	body, err := ioutil.ReadAll(r.Body)
 	if err != nil {
 		responses.ERROR(w, http.StatusUnprocessableEntity, err)
@@ -70,7 +75,12 @@ func (server *Server) SignIn(email, password string) (string, error) {
 }
 
 // Register : Register a new user
-func (s *Server) Register(w http.ResponseWriter, r *http.Request) {
+func (server *Server) Register(w http.ResponseWriter, r *http.Request) {
+	if r.Method != http.MethodPost {
+		w.WriteHeader(405) // Method not allowed
+		return
+	}
+
 	body, err := ioutil.ReadAll(r.Body)
 	if err != nil {
 		responses.ERROR(w, http.StatusUnprocessableEntity, err)
@@ -94,7 +104,7 @@ func (s *Server) Register(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	freshUser, err := user.SaveUser(s.DB)
+	freshUser, err := user.SaveUser(server.DB)
 	if err != nil {
 		responses.ERROR(w, http.StatusUnprocessableEntity, err)
 		return
