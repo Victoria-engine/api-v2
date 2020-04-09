@@ -7,8 +7,8 @@ type LoginResponse struct {
 	AccessToken string `json:"access_token"`
 }
 
-// ResgisterResponse : Register response data
-type ResgisterResponse struct {
+// RegisterResponse : Register response data
+type RegisterResponse struct {
 	FirstName string `json:"first_name"`
 	LastName  string `json:"last_name"`
 	Email     string `json:"email"`
@@ -20,6 +20,6 @@ func LoginPresenter(token string) LoginResponse {
 }
 
 // RegisterPresenter : Register Presenter
-func RegisterPresenter(u *models.User) ResgisterResponse {
-	return ResgisterResponse{u.FirstName, u.LastName, u.Email}
+func RegisterPresenter(u *models.User) RegisterResponse {
+	return RegisterResponse{u.FirstName, u.LastName, u.Email}
 }

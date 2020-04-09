@@ -68,7 +68,7 @@ func (server *Server) GetUserInfo(w http.ResponseWriter, r *http.Request) {
 
 	user := models.User{}
 
-	foundUser, err := user.FindUserByID(server.DB, uint32(uid))
+	foundUser, err := user.FindUserByID(server.DB, uint(uid))
 	if err != nil {
 		responses.ERROR(w, http.StatusBadRequest, err)
 		return

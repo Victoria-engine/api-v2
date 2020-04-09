@@ -19,7 +19,7 @@ type User struct {
 	LastName   string `gorm:"size:100;not null;" json:"last_name"`
 	Email      string `gorm:"size:150;not null;unique" json:"email"`
 	Password   string `gorm:"size:100;not null;" json:"password"`
-	BlogID     int    `json:"blog_id"`
+	BlogID     int    `gorm:"default:-1;" json:"blog_id"`
 }
 
 // BeforeSave : BeforeSave GORM hook
@@ -122,7 +122,7 @@ func (u *User) FindAllUsers(db *gorm.DB) (*[]User, error) {
 }
 
 // FindUserByID : Finds a user by ID
-func (u *User) FindUserByID(db *gorm.DB, uid uint32) (*User, error) {
+func (u *User) FindUserByID(db *gorm.DB, uid uint) (*User, error) {
 	var err error
 	err = db.Debug().Model(User{}).Where("id = ?", uid).Take(&u).Error
 	if err != nil {
