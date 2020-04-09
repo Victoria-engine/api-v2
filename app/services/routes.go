@@ -5,6 +5,7 @@ import "github.com/Victoria-engine/api-v2/app/middlewares"
 func (s *Server) initializeRoutes() {
 	//// Auth routes
 	s.Router.HandleFunc("/api/auth/login", middlewares.SetMiddlewareJSON(s.Login)).Methods("POST")
+	s.Router.HandleFunc("/api/auth/register", middlewares.SetMiddlewareJSON(s.Register)).Methods("POST")
 
 	//// Content routes
 	contentRoutes := s.Router.PathPrefix("/api/content").Subrouter()
@@ -42,7 +43,6 @@ func (s *Server) initializeRoutes() {
 		),
 	).Methods("DELETE")
 
-	// s.Router.HandleFunc("/users", middlewares.SetMiddlewareJSON(s.CreateUser)).Methods("POST")
 	// s.Router.HandleFunc("/users", middlewares.SetMiddlewareJSON(s.GetUsers)).Methods("GET")
 	// s.Router.HandleFunc("/users/{id}", middlewares.SetMiddlewareJSON(s.GetUser)).Methods("GET")
 	// s.Router.HandleFunc("/users/{id}", middlewares.SetMiddlewareJSON(middlewares.SetMiddlewareAuthentication(s.UpdateUser))).Methods("PUT")

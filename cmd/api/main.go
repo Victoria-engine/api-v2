@@ -5,7 +5,6 @@ import (
 	"log"
 	"os"
 
-	"github.com/Victoria-engine/api-v2/app/seed"
 	"github.com/Victoria-engine/api-v2/app/services"
 	"github.com/joho/godotenv"
 )
@@ -33,7 +32,8 @@ func Run() {
 		os.Getenv("DB_NAME"),
 	)
 
-	seed.Load(server.DB)
+	// Seed in case you need dummy data
+	//seed.Load(server.DB)
 
 	server.Run(fmt.Sprintf(":%s", os.Getenv("PORT")))
 }

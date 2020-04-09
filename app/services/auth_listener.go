@@ -32,7 +32,6 @@ func (server *Server) Login(w http.ResponseWriter, r *http.Request) {
 	user.Prepare()
 
 	err = user.Validate("login")
-
 	if err != nil {
 		responses.ERROR(w, http.StatusUnprocessableEntity, err)
 		return
@@ -68,4 +67,40 @@ func (server *Server) SignIn(email, password string) (string, error) {
 	}
 
 	return auth.CreateToken(uint32(user.ID))
+}
+
+// Register : Register a new user
+func (s *Server) Register(w http.ResponseWriter, r *http.Request) {
+	body, err := ioutil.ReadAll(r.Body)
+	if err != nil {
+		responses.ERROR(w, http.StatusUnprocessableEntity, err)
+		return
+	}
+
+	user := models.User{}
+
+	err = json.Unmarshal(body, &user)
+	if err != nil {
+		responses.ERROR(w, http.StatusUnprocessableEntity, err)
+		return
+	}
+
+	user.Prepare()
+
+	err = user.Validate("")
+
+	if err != nil {
+		responses.ERROR(w, http.StatusUnprocessableEntity, err)
+		return
+	}
+
+	freshUser, err := user.SaveUser(s.DB)
+	if err != nil {
+		responses.ERROR(w, http.StatusUnprocessableEntity, err)
+		return
+	}
+
+	res := presenters.RegisterPresenter(freshUser)
+
+	responses.JSON(w, http.StatusOK, res)
 }
