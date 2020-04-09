@@ -59,7 +59,23 @@ func TestFindUserByID(t *testing.T) {
 	assert.Equal(t, foundUser.Email, user.Email)
 }
 
-// // [User] Delete
-// func TestUserDelete() {
+// [User] Delete
+func TestUserDeleteByID(t *testing.T) {
+	err := refreshUsersAndPostsTable()
+	if err != nil {
+		log.Fatal(err)
+	}
 
-// }
+	user, err := seedOneUser()
+	if err != nil {
+		log.Fatalf("Cannot seed user: %v\n", err)
+	}
+
+	isDeleted, err := userInstance.DeleteByID(server.DB, user.ID)
+	if err != nil {
+		t.Errorf("Got an error updating the user: %v\n", err)
+		return
+	}
+
+	assert.Equal(t, isDeleted, int64(1))
+}
