@@ -49,10 +49,10 @@ func (u *User) Validate(action string) error {
 	switch strings.ToLower(action) {
 	case "update":
 		if u.FirstName == "" {
-			return errors.New("Required FirstName")
+			return errors.New("Required First Name")
 		}
 		if u.LastName == "" {
-			return errors.New("Required LastName")
+			return errors.New("Required Last Name")
 		}
 		if u.Password == "" {
 			return errors.New("Required Password")

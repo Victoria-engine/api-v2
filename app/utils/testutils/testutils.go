@@ -1,34 +1,22 @@
-package modeltests
+package testutils
 
 import (
 	"fmt"
 	"log"
 	"os"
-	"testing"
 
 	"github.com/Victoria-engine/api-v2/app/models"
 	"github.com/Victoria-engine/api-v2/app/services"
 	"github.com/jinzhu/gorm"
-	"github.com/joho/godotenv"
 )
 
-var server = services.Server{}
-var userInstance = models.User{}
-var postInstance = models.Post{}
-var blogInstance = models.Blog{}
+// Server : The server instance
+var Server = services.Server{}
+var UserInstance = models.User{}
+var PostInstance = models.Post{}
+var BlogInstance = models.Blog{}
 
-func TestMain(m *testing.M) {
-	var err error
-	err = godotenv.Load(os.ExpandEnv("../../.env"))
-	if err != nil {
-		log.Fatalf("Error getting env %v\n", err)
-	}
-
-	Database()
-
-	os.Exit(m.Run())
-}
-
+// Database : Initis the test Database
 func Database() {
 
 	var err error
@@ -44,7 +32,7 @@ func Database() {
 			os.Getenv("TestDbPassword"),
 		)
 
-		server.DB, err = gorm.Open(TestDbDriver, DBURL)
+		Server.DB, err = gorm.Open(TestDbDriver, DBURL)
 		if err != nil {
 			fmt.Printf("Cannot connect to %s database\n", TestDbDriver)
 			log.Fatal("An error happened trying to connect to the Testing Database:", err)
@@ -54,14 +42,14 @@ func Database() {
 	}
 }
 
-// Refreshes both because posts depend on posts
-func refreshUsersAndPostsTable() error {
-	err := server.DB.DropTableIfExists(&models.User{}, &models.Post{}).Error
+// RefreshUsersAndPostsTable : Refreshes both because posts depend on posts
+func RefreshUsersAndPostsTable() error {
+	err := Server.DB.DropTableIfExists(&models.User{}, &models.Post{}).Error
 	if err != nil {
 		return err
 	}
 
-	err = server.DB.AutoMigrate(&models.User{}).Error
+	err = Server.DB.AutoMigrate(&models.User{}).Error
 	if err != nil {
 		return err
 	}
@@ -70,13 +58,14 @@ func refreshUsersAndPostsTable() error {
 	return nil
 }
 
-func refreshPostsTable() error {
+// RefreshPostsTable : RefreshPostsTable
+func RefreshPostsTable() error {
 
-	err := server.DB.DropTableIfExists(&models.Post{}).Error
+	err := Server.DB.DropTableIfExists(&models.Post{}).Error
 	if err != nil {
 		return err
 	}
-	err = server.DB.AutoMigrate(&models.Post{}).Error
+	err = Server.DB.AutoMigrate(&models.Post{}).Error
 	if err != nil {
 		return err
 	}
@@ -85,28 +74,30 @@ func refreshPostsTable() error {
 	return nil
 }
 
-func seedOneUser() (models.User, error) {
+// SeedOneUser : SeedOneUser
+func SeedOneUser() (models.User, error) {
 	user := models.User{
 		FirstName: "Tester",
 		LastName:  "User",
-		Email:     "pet@gmail.com",
+		Email:     "logged@email.com",
 		Password:  "password",
 	}
 
-	err := server.DB.Model(&models.User{}).Create(&user).Error
+	err := Server.DB.Model(&models.User{}).Create(&user).Error
 	if err != nil {
 		log.Fatalf("cannot seed users table: %v", err)
 	}
 	return user, nil
 }
 
-func seedOnePost() (models.Post, error) {
-	err := refreshPostsTable()
+// SeedOnePost : SeedOnePost
+func SeedOnePost() (models.Post, error) {
+	err := RefreshPostsTable()
 	if err != nil {
 		log.Fatalln(err)
 	}
 
-	user, err := seedOneUser()
+	user, err := SeedOneUser()
 	if err != nil {
 		log.Fatalln(err)
 	}
@@ -118,7 +109,7 @@ func seedOnePost() (models.Post, error) {
 		Author:   user,
 	}
 
-	err = server.DB.Create(&models.Post{}).Create(&post).Error
+	err = Server.DB.Create(&models.Post{}).Create(&post).Error
 	if err != nil {
 		log.Fatalln(err)
 	}
@@ -126,7 +117,8 @@ func seedOnePost() (models.Post, error) {
 	return post, nil
 }
 
-func seedUsers() ([]models.User, error) {
+// SeedUsers : SeedUsers
+func SeedUsers() ([]models.User, error) {
 	users := []models.User{
 		{
 			FirstName: "Tester 1",
@@ -143,7 +135,7 @@ func seedUsers() ([]models.User, error) {
 	}
 
 	for i := range users {
-		err := server.DB.Model(&models.User{}).Create(&users[i]).Error
+		err := Server.DB.Model(&models.User{}).Create(&users[i]).Error
 		if err != nil {
 			return nil, err
 		}
@@ -152,9 +144,10 @@ func seedUsers() ([]models.User, error) {
 	return users, nil
 }
 
-func seedPosts() ([]models.Post, error) {
+// SeedPosts : SeedPosts
+func SeedPosts() ([]models.Post, error) {
 
-	refreshPostsTable()
+	RefreshPostsTable()
 
 	var err error
 
@@ -169,20 +162,20 @@ func seedPosts() ([]models.Post, error) {
 		},
 	}
 
-	users, err := seedUsers()
+	users, err := SeedUsers()
 	if err != nil {
 		log.Fatalln(err)
 	}
 
 	for i := range users {
-		err = server.DB.Model(&models.User{}).Create(&users[i]).Error
+		err = Server.DB.Model(&models.User{}).Create(&users[i]).Error
 		if err != nil {
 			log.Fatalf("cannot seed users table: %v", err)
 		}
 
 		posts[i].AuthorID = users[i].ID
 
-		err = server.DB.Model(&models.Post{}).Create(&posts[i]).Error
+		err = Server.DB.Model(&models.Post{}).Create(&posts[i]).Error
 		if err != nil {
 			log.Fatalf("cannot seed posts table: %v", err)
 		}
