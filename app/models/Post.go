@@ -12,15 +12,16 @@ import (
 // Post : Post data structure
 type Post struct {
 	gorm.Model        // Inject fields `ID`, `CreatedAt`, `UpdatedAt`, `DeletedAt` into the model
-	Title      string `gorm:"size:255;not null;unique" json:"title"`
+	Title      string `gorm:"size:255;not null;" json:"title"`
 	Content    string `gorm:"size:255;not null;" json:"content"`
 	Author     User   `json:"author"`
-	AuthorID   uint   `gorm:"not null" json:"author_id"`
+	BlogID     uint   `gorm:"not null"`
 }
 
 // Prepare : Prepare
 func (p *Post) Prepare() {
 	p.ID = 0
+	p.BlogID = 0
 	p.Title = html.EscapeString(strings.TrimSpace(p.Title))
 	p.Content = html.EscapeString(strings.TrimSpace(p.Content))
 	p.Author = User{}
@@ -37,9 +38,6 @@ func (p *Post) Validate() error {
 	if p.Content == "" {
 		return errors.New("Required Content")
 	}
-	if p.AuthorID < 1 {
-		return errors.New("Required Author")
-	}
 	return nil
 }
 
@@ -52,9 +50,9 @@ func (p *Post) SavePost(db *gorm.DB) (*Post, error) {
 	}
 
 	if p.ID != 0 {
-		err = db.Debug().Model(&User{}).Where("id = ?", p.AuthorID).Take(&p.Author).Error
+		err = db.Debug().Model(&User{}).Where("id = ?", p.Author.ID).Take(&p.Author).Error
 		if err != nil {
-			return &Post{}, err
+			return &Post{}, errors.New("Cannot attach post to user becauser user does not exist " + err.Error())
 		}
 	}
 
@@ -73,7 +71,7 @@ func (p *Post) FindAllPosts(db *gorm.DB) (*[]Post, error) {
 
 	if len(posts) > 0 {
 		for i := range posts {
-			err := db.Debug().Model(&User{}).Where("id = ?", posts[i].AuthorID).Take(&posts[i].Author).Error
+			err := db.Debug().Model(&User{}).Where("id = ?", posts[i].Author.ID).Take(&posts[i].Author).Error
 			if err != nil {
 				return &[]Post{}, err
 			}
@@ -91,7 +89,7 @@ func (p *Post) FindPostByID(db *gorm.DB, pid uint64) (*Post, error) {
 	}
 
 	if p.ID != 0 {
-		err = db.Debug().Model(&User{}).Where("id = ?", p.AuthorID).Take(&p.Author).Error
+		err = db.Debug().Model(&User{}).Where("id = ?", p.Author.ID).Take(&p.Author).Error
 		if err != nil {
 			return &Post{}, err
 		}
@@ -114,7 +112,7 @@ func (p *Post) UpdatePost(db *gorm.DB) (*Post, error) {
 		return &Post{}, err
 	}
 	if p.ID != 0 {
-		err = db.Debug().Model(&User{}).Where("id = ?", p.AuthorID).Take(&p.Author).Error
+		err = db.Debug().Model(&User{}).Where("id = ?", p.BlogID).Take(&p.Author).Error
 		if err != nil {
 			return &Post{}, err
 		}

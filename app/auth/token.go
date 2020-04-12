@@ -49,10 +49,10 @@ func IsTokenValid(r *http.Request) error {
 	return nil
 }
 
-// ExtractToken : Extracts the token from the request headers
+// ExtractToken : Extracts the token from the request headers or the url
 func ExtractToken(r *http.Request) string {
 	keys := r.URL.Query()
-	token := keys.Get("token")
+	token := keys.Get("access_token")
 
 	if token != "" {
 		return token
@@ -66,8 +66,8 @@ func ExtractToken(r *http.Request) string {
 	return ""
 }
 
-// ExtractTokenID :
-func ExtractTokenID(r *http.Request) (uint32, error) {
+// ExtractTokenID : Extracts the "user_id" from the token
+func ExtractTokenID(r *http.Request) (uint, error) {
 
 	tokenString := ExtractToken(r)
 
@@ -88,7 +88,7 @@ func ExtractTokenID(r *http.Request) (uint32, error) {
 		if err != nil {
 			return 0, err
 		}
-		return uint32(uid), nil
+		return uint(uid), nil
 	}
 
 	return 0, nil

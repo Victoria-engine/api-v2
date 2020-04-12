@@ -8,14 +8,14 @@ import (
 )
 
 var users = []models.User{
-	models.User{
+	{
 		FirstName: "Tiago",
 		LastName:  "Ferreira",
 		BlogID:    1,
 		Email:     "tiago@gmail.com",
 		Password:  "password",
 	},
-	models.User{
+	{
 		FirstName: "John",
 		LastName:  "Doe",
 		BlogID:    2,
@@ -25,11 +25,11 @@ var users = []models.User{
 }
 
 var posts = []models.Post{
-	models.Post{
+	{
 		Title:   "Title 1",
 		Content: "Hello world 1",
 	},
-	models.Post{
+	{
 		Title:   "Title 2",
 		Content: "Hello world 2",
 	},
@@ -57,7 +57,9 @@ func Load(db *gorm.DB) {
 		if err != nil {
 			log.Fatalf("cannot seed users table: %v", err)
 		}
-		posts[i].AuthorID = users[i].ID
+
+		posts[i].BlogID = users[i].BlogID
+		posts[i].Author = users[i]
 
 		err = db.Debug().Model(&models.Post{}).Create(&posts[i]).Error
 		if err != nil {

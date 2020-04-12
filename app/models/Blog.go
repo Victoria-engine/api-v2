@@ -8,7 +8,6 @@ type Blog struct {
 	Name        string `gorm:"size:255;not null;unique" json:"name"`
 	Description string `gorm:"size:255;not null;unique" json:"description"`
 	Author      User   `json:"author"`
-	AuthorID    uint   `gorm:"not null" json:"author_id"`
 	Key         uint   `gorm:"not null" json:"key"`
 	Locale      string `gorm:"not null" json:"locale"`
 	Posts       []Post `json:"posts"`

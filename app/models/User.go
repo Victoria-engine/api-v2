@@ -19,7 +19,7 @@ type User struct {
 	LastName   string `gorm:"size:100;not null;" json:"last_name"`
 	Email      string `gorm:"size:150;not null;unique" json:"email"`
 	Password   string `gorm:"size:100;not null;" json:"password"`
-	BlogID     int    `gorm:"default:-1;" json:"blog_id"`
+	BlogID     uint   `gorm:"default:0;" json:"blog_id"`
 }
 
 // BeforeSave : BeforeSave GORM hook
@@ -39,7 +39,7 @@ func (u *User) Prepare() {
 	u.FirstName = html.EscapeString(strings.TrimSpace(u.FirstName))
 	u.LastName = html.EscapeString(strings.TrimSpace(u.LastName))
 	u.Email = html.EscapeString(strings.TrimSpace(u.Email))
-	u.BlogID = -1
+	u.BlogID = 0
 	u.CreatedAt = time.Now()
 	u.UpdatedAt = time.Now()
 }

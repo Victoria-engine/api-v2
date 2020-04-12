@@ -18,11 +18,14 @@ func (s *Server) initializeRoutes() {
 		),
 	).Methods("GET")
 
-	// Post
-	//postRoutes := contentRoutes.PathPrefix("/post").Subrouter()
+	//Post
+	postRoutes := contentRoutes.PathPrefix("/post").Subrouter()
 
 	// Posts routes
-	// s.Router.HandleFunc("/posts", middlewares.SetMiddlewareJSON(s.CreatePost)).Methods("POST")
+	postRoutes.HandleFunc("",
+		middlewares.SetMiddlewareJSON(
+			middlewares.SetMiddlewareAuthentication(s.SavePost),
+		)).Methods("POST")
 	// s.Router.HandleFunc("/posts", middlewares.SetMiddlewareJSON(s.GetPosts)).Methods("GET")
 	// s.Router.HandleFunc("/posts/{id}", middlewares.SetMiddlewareJSON(s.GetPost)).Methods("GET")
 	// s.Router.HandleFunc("/posts/{id}", middlewares.SetMiddlewareJSON(middlewares.SetMiddlewareAuthentication(s.UpdatePost))).Methods("PUT")

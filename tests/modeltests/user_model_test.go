@@ -33,7 +33,7 @@ func TestSaveUser(t *testing.T) {
 	}
 
 	assert.Equal(t, user.ID, createdUser.ID)
-	assert.Equal(t, createdUser.BlogID, -1)
+	assert.Equal(t, createdUser.BlogID, 0)
 	assert.Equal(t, user.Email, createdUser.Email)
 	assert.Equal(t, user.FirstName, createdUser.FirstName)
 	assert.Equal(t, user.LastName, createdUser.LastName)

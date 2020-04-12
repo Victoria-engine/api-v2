@@ -156,10 +156,10 @@ func SeedOnePost() (models.Post, error) {
 	}
 
 	post := models.Post{
-		Title:    "This is the title sam",
-		Content:  "This is the content sam",
-		AuthorID: user.ID,
-		Author:   user,
+		Title:   "This is the title sam",
+		Content: "This is the content sam",
+		Author:  user,
+		BlogID:  user.BlogID,
 	}
 
 	err = Server.DB.Create(&models.Post{}).Create(&post).Error
@@ -226,7 +226,8 @@ func SeedPosts() ([]models.Post, error) {
 			log.Fatalf("cannot seed users table: %v", err)
 		}
 
-		posts[i].AuthorID = users[i].ID
+		posts[i].BlogID = users[i].BlogID
+		posts[i].Author = users[i]
 
 		err = Server.DB.Model(&models.Post{}).Create(&posts[i]).Error
 		if err != nil {
