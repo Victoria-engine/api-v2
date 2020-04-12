@@ -2,11 +2,17 @@ package testutils
 
 import (
 	"fmt"
+	"io"
 	"log"
+	"net/http"
+	"net/http/httptest"
 	"os"
 
+	"github.com/Victoria-engine/api-v2/app/auth"
+	"github.com/Victoria-engine/api-v2/app/middlewares"
 	"github.com/Victoria-engine/api-v2/app/models"
 	"github.com/Victoria-engine/api-v2/app/services"
+	"github.com/gorilla/mux"
 	"github.com/jinzhu/gorm"
 )
 
@@ -40,6 +46,53 @@ func Database() {
 			fmt.Printf("Connected to the %s database\n", TestDbDriver)
 		}
 	}
+}
+
+// AuthenticatedRequest : Makes an jwt authenticated request for protected routes
+func AuthenticatedRequest(h http.HandlerFunc, method, url string, urlParams map[string]string, body io.Reader) *httptest.ResponseRecorder {
+	req, err := http.NewRequest(method, url, body)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	req = mux.SetURLVars(req, urlParams)
+
+	// Create a new token for the test user
+	token, err := auth.CreateToken(1)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	req.Header.Set("Authorization", fmt.Sprintf("Bearer %v", token))
+
+	responseRecorder := httptest.NewRecorder()
+
+	handler := http.HandlerFunc(
+		middlewares.SetMiddlewareJSON(
+			middlewares.SetMiddlewareAuthentication(h),
+		),
+	)
+
+	handler.ServeHTTP(responseRecorder, req)
+
+	return responseRecorder
+}
+
+// Request : Makes a normal request
+func Request(h http.HandlerFunc, method, url string, urlParams map[string]string, body io.Reader) *httptest.ResponseRecorder {
+	req, err := http.NewRequest(method, url, body)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	req = mux.SetURLVars(req, urlParams)
+
+	responseRecorder := httptest.NewRecorder()
+
+	handler := http.HandlerFunc(middlewares.SetMiddlewareJSON(h))
+	handler.ServeHTTP(responseRecorder, req)
+
+	return responseRecorder
 }
 
 // RefreshUsersAndPostsTable : Refreshes both because posts depend on posts

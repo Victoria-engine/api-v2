@@ -4,28 +4,11 @@ import (
 	"bytes"
 	"encoding/json"
 	"log"
-	"net/http"
-	"net/http/httptest"
-	"os"
 	"testing"
 
 	"github.com/Victoria-engine/api-v2/app/utils/testutils"
-	"github.com/joho/godotenv"
 	"github.com/stretchr/testify/assert"
 )
-
-// TestMain : TestMain
-func TestMain(m *testing.M) {
-	var err error
-	err = godotenv.Load(os.ExpandEnv("../../.env"))
-	if err != nil {
-		log.Fatalf("Error getting env %v\n", err)
-	}
-
-	testutils.Database()
-
-	os.Exit(m.Run())
-}
 
 func TestRegister(t *testing.T) {
 	err := testutils.RefreshUsersAndPostsTable()
@@ -38,7 +21,7 @@ func TestRegister(t *testing.T) {
 		log.Fatal(err)
 	}
 
-	requests := []struct {
+	testCases := []struct {
 		inputJSON    string
 		statusCode   int
 		email        string
@@ -71,15 +54,8 @@ func TestRegister(t *testing.T) {
 		},
 	}
 
-	for _, reqData := range requests {
-		req, err := http.NewRequest("POST", "api/auth/register", bytes.NewBufferString(reqData.inputJSON))
-		if err != nil {
-			t.Error(err)
-		}
-
-		rr := httptest.NewRecorder()
-		handler := http.HandlerFunc(testutils.Server.Register)
-		handler.ServeHTTP(rr, req)
+	for _, reqData := range testCases {
+		rr := testutils.Request(testutils.Server.Register, "POST", "api/auth/register", nil, bytes.NewBufferString(reqData.inputJSON))
 
 		// Test the status code
 		assert.Equal(t, rr.Code, reqData.statusCode)
@@ -112,7 +88,7 @@ func TestLogin(t *testing.T) {
 		log.Fatal(err)
 	}
 
-	requests := []struct {
+	testCases := []struct {
 		inputJSON    string
 		statusCode   int
 		email        string
@@ -151,15 +127,8 @@ func TestLogin(t *testing.T) {
 		},
 	}
 
-	for _, reqData := range requests {
-		req, err := http.NewRequest("POST", "api/auth/register", bytes.NewBufferString(reqData.inputJSON))
-		if err != nil {
-			t.Error(err)
-		}
-
-		rr := httptest.NewRecorder()
-		handler := http.HandlerFunc(testutils.Server.Login)
-		handler.ServeHTTP(rr, req)
+	for _, reqData := range testCases {
+		rr := testutils.Request(testutils.Server.Login, "POST", "api/auth/login", nil, bytes.NewBufferString(reqData.inputJSON))
 
 		// Test the status code
 		assert.Equal(t, rr.Code, reqData.statusCode)
