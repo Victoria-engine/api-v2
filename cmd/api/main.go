@@ -1,6 +1,7 @@
 package api
 
 import (
+	"flag"
 	"fmt"
 	"log"
 	"os"
@@ -13,7 +14,11 @@ var server = services.Server{}
 
 // Run : Runs the REST API
 func Run() {
+	var (
+		port = flag.String("port", os.Getenv("PORT"), "The server port")
+	)
 
+	flag.Parse()
 	var err error
 
 	err = godotenv.Load()
@@ -35,5 +40,5 @@ func Run() {
 	// Seed in case you need dummy data
 	//seed.Load(server.DB)
 
-	server.Run(fmt.Sprintf(":%s", os.Getenv("PORT")))
+	server.Run(fmt.Sprintf(":%s", *port))
 }
