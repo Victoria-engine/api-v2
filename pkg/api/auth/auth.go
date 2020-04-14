@@ -35,43 +35,14 @@ func (a Auth) SignIn(email, password string) (string, error) {
 	return a.tokenGen.GenerateToken(user.ID)
 }
 
-/*// Register : Register a new user
-func (a Auth) Register(u *models.User) {
-	if r.Method != http.MethodPost {
-		w.WriteHeader(405) // Method not allowed
-		return
-	}
+// Register : Register a new user
+func (a Auth) Register(u models.User) (models.User, error) {
 
-	body, err := ioutil.ReadAll(r.Body)
+	freshUser, err := u.SaveUser(a.db)
 	if err != nil {
-		responses.ERROR(w, http.StatusUnprocessableEntity, err)
-		return
+
+		return *freshUser, err
 	}
 
-	user := models.User{}
-
-	err = json.Unmarshal(body, &user)
-	if err != nil {
-		responses.ERROR(w, http.StatusUnprocessableEntity, err)
-		return
-	}
-
-	user.Prepare()
-
-	err = user.Validate("")
-
-	if err != nil {
-		responses.ERROR(w, http.StatusUnprocessableEntity, err)
-		return
-	}
-
-	freshUser, err := user.SaveUser(a.db)
-	if err != nil {
-		responses.ERROR(w, http.StatusUnprocessableEntity, fmt.Errorf("user email already exists"))
-		return
-	}
-
-	res := RegisterPresenter(freshUser)
-
-	responses.JSON(w, http.StatusOK, res)
-}*/
+	return *freshUser, nil
+}

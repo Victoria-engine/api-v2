@@ -19,7 +19,7 @@ func Start(Dbdriver, DbUser, DbPassword, DbPort, DbHost, DbName, port string) er
 	//TODO: Add JSON middleware for response
 
 	expTime := time.Hour * 168
-	jwt, err := jwtauth.New("HS256" , os.Getenv("JWT_SECRET"), expTime, 64)
+	jwt, err := jwtauth.New("HS256", os.Getenv("JWT_SECRET"), expTime, 64)
 	if err != nil {
 		return err
 	}

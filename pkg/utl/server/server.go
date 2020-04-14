@@ -52,20 +52,16 @@ func New(Dbdriver, DbUser, DbPassword, DbPort, DbHost, DbName string) *Server {
 	return server
 }
 
+// TODO: Is this needed ?
 func (server *Server) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	server.Router.ServeHTTP(w, r)
 }
 
-func (server *Server) StartServer(addr string) error {
-	return http.ListenAndServe(addr, server.Router)
-}
-
 func healthCheck(w http.ResponseWriter, r *http.Request) {
-	responses.JSON(w, http.StatusOK, "OK")
+	responses.JSON(w, http.StatusOK, "All good!")
 }
 
-
-//TODO: Add config struct to params
+// TODO: Add config struct to params
 // Run : Runs and serves the server instance
 func (server *Server) Run(addr string) {
 
@@ -74,21 +70,17 @@ func (server *Server) Run(addr string) {
 	signal.Notify(stop, os.Interrupt)
 
 	serverAddr := ":" + addr
-	if serverAddr == ":" {
-		addr = ":3001"
-	}
 
 	h := &http.Server{
-		Addr: addr,
+		Addr: serverAddr,
 		//TODO: Add these timeout values to config values
 		ReadTimeout:  10 * time.Second,
 		WriteTimeout: 5 * time.Second,
-		Handler: server,
+		Handler:      server,
 	}
 
-
 	go func() {
-		server.Logger.Printf("Listening on http://0.0.0.0%s\n", addr)
+		server.Logger.Printf("Listening on http://0.0.0.0%s\n", serverAddr)
 
 		if err := h.ListenAndServe(); err != nil {
 			server.Logger.Fatal(err)

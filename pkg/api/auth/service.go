@@ -1,6 +1,7 @@
 package auth
 
 import (
+	"github.com/Victoria-engine/api-v2/pkg/models"
 	"github.com/jinzhu/gorm"
 )
 
@@ -10,13 +11,13 @@ type TokenGenerator interface {
 }
 
 type Service interface {
-	//Register(u *models.User) (string, error)
+	Register(u models.User) (models.User, error)
 	Authenticate(email, password string) (string, error)
 }
 
 // Auth
 type Auth struct {
-	db *gorm.DB
+	db       *gorm.DB
 	tokenGen TokenGenerator
 }
 

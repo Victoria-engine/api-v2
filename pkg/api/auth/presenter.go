@@ -14,13 +14,12 @@ type RegisterResponse struct {
 	Email     string `json:"email"`
 }
 
-
 // LoginPresenter : Login Presenter
 func LoginPresenter(token string) LoginResponse {
-	return LoginResponse{ token}
+	return LoginResponse{token}
 }
 
 // RegisterPresenter : Register Presenter
-func RegisterPresenter(p *models.User) RegisterResponse {
+func RegisterPresenter(p models.User) RegisterResponse {
 	return RegisterResponse{p.FirstName, p.LastName, p.Email}
 }
