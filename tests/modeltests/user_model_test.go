@@ -4,8 +4,8 @@ import (
 	"log"
 	"testing"
 
-	"github.com/Victoria-engine/api-v2/app/models"
-	"github.com/Victoria-engine/api-v2/app/utils/testutils"
+	"github.com/Victoria-engine/api-v2/pkg/models"
+	"github.com/Victoria-engine/api-v2/pkg/utl/testutils"
 	"github.com/stretchr/testify/assert"
 )
 
@@ -33,7 +33,7 @@ func TestSaveUser(t *testing.T) {
 	}
 
 	assert.Equal(t, user.ID, createdUser.ID)
-	assert.Equal(t, createdUser.BlogID, 0)
+	assert.Equal(t, createdUser.BlogID, uint(0))
 	assert.Equal(t, user.Email, createdUser.Email)
 	assert.Equal(t, user.FirstName, createdUser.FirstName)
 	assert.Equal(t, user.LastName, createdUser.LastName)

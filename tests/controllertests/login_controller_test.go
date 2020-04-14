@@ -6,7 +6,7 @@ import (
 	"log"
 	"testing"
 
-	"github.com/Victoria-engine/api-v2/app/utils/testutils"
+	"github.com/Victoria-engine/api-v2/pkg/utl/testutils"
 	"github.com/stretchr/testify/assert"
 )
 
@@ -55,7 +55,7 @@ func TestRegister(t *testing.T) {
 	}
 
 	for _, reqData := range testCases {
-		rr := testutils.Request(testutils.Server.Register, "POST", "api/auth/register", nil, bytes.NewBufferString(reqData.inputJSON))
+		rr := testutils.Request(testutils.Server.Register, "POST", "api/authmiddleware/register", nil, bytes.NewBufferString(reqData.inputJSON))
 
 		// Test the status code
 		assert.Equal(t, rr.Code, reqData.statusCode)
@@ -128,7 +128,7 @@ func TestLogin(t *testing.T) {
 	}
 
 	for _, reqData := range testCases {
-		rr := testutils.Request(testutils.Server.Login, "POST", "api/auth/login", nil, bytes.NewBufferString(reqData.inputJSON))
+		rr := testutils.Request(testutils.Server.Login, "POST", "api/authmiddleware/login", nil, bytes.NewBufferString(reqData.inputJSON))
 
 		// Test the status code
 		assert.Equal(t, rr.Code, reqData.statusCode)
