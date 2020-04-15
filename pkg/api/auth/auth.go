@@ -1,7 +1,7 @@
 package auth
 
 import (
-	"github.com/Victoria-engine/api-v2/pkg/models"
+	"github.com/Victoria-engine/api-v2/pkg/api/user/repo"
 	"github.com/Victoria-engine/api-v2/pkg/utl/crypt"
 	"golang.org/x/crypto/bcrypt"
 )
@@ -20,9 +20,9 @@ func (a Auth) Authenticate(email, password string) (string, error) {
 func (a Auth) SignIn(email, password string) (string, error) {
 	var err error
 
-	user := models.User{}
+	var user repo.UserModel
 
-	err = a.db.Debug().Model(models.User{}).Where("email = ?", email).Take(&user).Error
+	err = a.db.Debug().Model(repo.UserModel{}).Where("email = ?", email).Take(&user).Error
 	if err != nil {
 		return "", err
 	}
@@ -36,7 +36,7 @@ func (a Auth) SignIn(email, password string) (string, error) {
 }
 
 // Register : Register a new user
-func (a Auth) Register(u models.User) (models.User, error) {
+func (a Auth) Register(u repo.UserModel) (repo.UserModel, error) {
 
 	freshUser, err := u.SaveUser(a.db)
 	if err != nil {

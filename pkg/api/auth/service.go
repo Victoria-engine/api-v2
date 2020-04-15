@@ -1,7 +1,7 @@
 package auth
 
 import (
-	"github.com/Victoria-engine/api-v2/pkg/models"
+	"github.com/Victoria-engine/api-v2/pkg/api/user/repo"
 	"github.com/jinzhu/gorm"
 )
 
@@ -10,8 +10,9 @@ type TokenGenerator interface {
 	GenerateToken(uid uint) (string, error)
 }
 
+// Service : Auth service with their dependencies
 type Service interface {
-	Register(u models.User) (models.User, error)
+	Register(u repo.UserModel) (repo.UserModel, error)
 	Authenticate(email, password string) (string, error)
 }
 

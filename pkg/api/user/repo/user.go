@@ -1,19 +1,18 @@
-package models
+package repo
 
 import (
 	"errors"
 	"github.com/Victoria-engine/api-v2/pkg/utl/crypt"
+	"github.com/badoux/checkmail"
+	"github.com/jinzhu/gorm"
 	"html"
 	"log"
 	"strings"
 	"time"
-
-	"github.com/badoux/checkmail"
-	"github.com/jinzhu/gorm"
 )
 
-// User : User data structure
-type User struct {
+// UserModel : User Model data structure
+type UserModel struct {
 	gorm.Model        // Inject fields `ID`, `CreatedAt`, `UpdatedAt`, `DeletedAt` into the model
 	FirstName  string `gorm:"size:100;not null;" json:"first_name"`
 	LastName   string `gorm:"size:100;not null;" json:"last_name"`
@@ -23,7 +22,7 @@ type User struct {
 }
 
 // BeforeSave : BeforeSave GORM hook
-func (u *User) BeforeSave() error {
+func (u *UserModel) BeforeSave() error {
 	hashedPassword, err := crypt.HashPassword(u.Password)
 	if err != nil {
 		return err
@@ -34,7 +33,7 @@ func (u *User) BeforeSave() error {
 }
 
 // Prepare : Initialzes a user model
-func (u *User) Prepare() {
+func (u *UserModel) Prepare() {
 	u.ID = 0
 	u.FirstName = html.EscapeString(strings.TrimSpace(u.FirstName))
 	u.LastName = html.EscapeString(strings.TrimSpace(u.LastName))
@@ -45,7 +44,7 @@ func (u *User) Prepare() {
 }
 
 // Validate : User model validations
-func (u *User) Validate(action string) error {
+func (u *UserModel) Validate(action string) error {
 	switch strings.ToLower(action) {
 	case "update":
 		if u.FirstName == "" {
@@ -98,46 +97,46 @@ func (u *User) Validate(action string) error {
 }
 
 // SaveUser : Creates a user into the db
-func (u *User) SaveUser(db *gorm.DB) (*User, error) {
+func (u *UserModel) SaveUser(db *gorm.DB) (*UserModel, error) {
 	var err error
 
 	err = db.Debug().Create(&u).Error
 	if err != nil {
-		return &User{}, err
+		return &UserModel{}, err
 	}
 	return u, nil
 }
 
 // FindAllUsers : Finds all users in the table
-func (u *User) FindAllUsers(db *gorm.DB) (*[]User, error) {
+func (u *UserModel) FindAllUsers(db *gorm.DB) (*[]UserModel, error) {
 	var err error
-	users := []User{}
+	users := []UserModel{}
 
-	err = db.Debug().Model(&User{}).Limit(100).Find(&users).Error
+	err = db.Debug().Model(&UserModel{}).Limit(100).Find(&users).Error
 	if err != nil {
-		return &[]User{}, err
+		return &[]UserModel{}, err
 	}
 
 	return &users, err
 }
 
 // FindUserByID : Finds a user by ID
-func (u *User) FindUserByID(db *gorm.DB, uid uint) (*User, error) {
+func (u *UserModel) FindUserByID(db *gorm.DB, uid uint) (*UserModel, error) {
 	var err error
-	err = db.Debug().Model(User{}).Where("id = ?", uid).Take(&u).Error
+	err = db.Debug().Model(UserModel{}).Where("id = ?", uid).Take(&u).Error
 	if err != nil {
-		return &User{}, err
+		return &UserModel{}, err
 	}
 
 	if gorm.IsRecordNotFoundError(err) {
-		return &User{}, errors.New("User Not Found")
+		return &UserModel{}, errors.New("user Not Found")
 	}
 
 	return u, err
 }
 
 // UpdateUser : Updates a user
-func (u *User) UpdateUser(db *gorm.DB, uid uint32) (*User, error) {
+func (u *UserModel) UpdateUser(db *gorm.DB, uid uint32) (*UserModel, error) {
 
 	// To hash the password
 	err := u.BeforeSave()
@@ -145,7 +144,7 @@ func (u *User) UpdateUser(db *gorm.DB, uid uint32) (*User, error) {
 		log.Fatal(err)
 	}
 
-	db = db.Debug().Model(&User{}).Where("id = ?", uid).Take(&User{}).UpdateColumns(
+	db = db.Debug().Model(&UserModel{}).Where("id = ?", uid).Take(&UserModel{}).UpdateColumns(
 		map[string]interface{}{
 			"password":   u.Password,
 			"first_name": u.FirstName,
@@ -156,20 +155,20 @@ func (u *User) UpdateUser(db *gorm.DB, uid uint32) (*User, error) {
 	)
 
 	if db.Error != nil {
-		return &User{}, db.Error
+		return &UserModel{}, db.Error
 	}
 	// This is the display the updated user
-	err = db.Debug().Model(&User{}).Where("id = ?", uid).Take(&u).Error
+	err = db.Debug().Model(&UserModel{}).Where("id = ?", uid).Take(&u).Error
 	if err != nil {
-		return &User{}, err
+		return &UserModel{}, err
 	}
 	return u, nil
 }
 
 // DeleteByID : Deletes a user by ID
-func (u *User) DeleteByID(db *gorm.DB, uid uint) (int64, error) {
+func (u *UserModel) DeleteByID(db *gorm.DB, uid uint) (int64, error) {
 
-	db = db.Debug().Model(&User{}).Where("id = ?", uid).Take(&User{}).Delete(&User{})
+	db = db.Debug().Model(&UserModel{}).Where("id = ?", uid).Take(&UserModel{}).Delete(&UserModel{})
 
 	if db.Error != nil {
 		return 0, db.Error

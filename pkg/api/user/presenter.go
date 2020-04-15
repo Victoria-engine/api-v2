@@ -1,9 +1,8 @@
-package presenters
+package user
 
 import (
+	ur "github.com/Victoria-engine/api-v2/pkg/api/user/repo"
 	"time"
-
-	"github.com/Victoria-engine/api-v2/pkg/models"
 )
 
 // GetUserInfoResponse : GetUserInfo Response data
@@ -19,7 +18,7 @@ type GetUserInfoResponse struct {
 }
 
 // GetUserInfoPresenter : GetUserInfo Presenter
-func GetUserInfoPresenter(u *models.User) GetUserInfoResponse {
+func GetUserInfoPresenter(u ur.UserModel) GetUserInfoResponse {
 	return GetUserInfoResponse{
 		u.ID,
 		u.FirstName,

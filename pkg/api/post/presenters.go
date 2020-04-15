@@ -1,6 +1,6 @@
-package presenters
+package post
 
-import "github.com/Victoria-engine/api-v2/pkg/models"
+import "github.com/Victoria-engine/api-v2/pkg/api/post/repo"
 
 // SavePostResponse : SavePost Response
 type SavePostResponse struct {
@@ -9,6 +9,6 @@ type SavePostResponse struct {
 }
 
 // SavePostPresenter : SavePost Presenter
-func SavePostPresenter(p models.Post) SavePostResponse {
+func SavePostPresenter(p repo.PostModel) SavePostResponse {
 	return SavePostResponse{p.Title, p.Content}
 }

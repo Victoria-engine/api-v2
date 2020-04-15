@@ -3,12 +3,11 @@ package services
 import (
 	"errors"
 	"fmt"
-	"github.com/Victoria-engine/api-v2/pkg/utl/jwtauth"
+	user2 "github.com/Victoria-engine/api-v2/pkg/api/user"
 	"net/http"
 	"strconv"
 
 	"github.com/Victoria-engine/api-v2/pkg/models"
-	"github.com/Victoria-engine/api-v2/pkg/presenters"
 	"github.com/Victoria-engine/api-v2/pkg/utl/responses"
 	"github.com/gorilla/mux"
 )
@@ -71,7 +70,7 @@ func (server *Server) GetUserInfo(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	res := presenters.GetUserInfoPresenter(foundUser)
+	res := user2.GetUserInfoPresenter(foundUser)
 
 	responses.JSON(w, http.StatusOK, res)
 }

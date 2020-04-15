@@ -4,7 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"github.com/Victoria-engine/api-v2/pkg/api/auth"
-	"github.com/Victoria-engine/api-v2/pkg/models"
+	"github.com/Victoria-engine/api-v2/pkg/api/user/repo"
 	"github.com/Victoria-engine/api-v2/pkg/utl/formaterror"
 	json2 "github.com/Victoria-engine/api-v2/pkg/utl/middleware/json"
 	"github.com/Victoria-engine/api-v2/pkg/utl/responses"
@@ -44,7 +44,7 @@ func (h *HTTP) login(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	u := models.User{}
+	u := repo.UserModel{}
 
 	err = json.Unmarshal(body, &u)
 	if err != nil {
@@ -82,7 +82,7 @@ func (h *HTTP) register(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	u := models.User{}
+	u := repo.UserModel{}
 
 	err = json.Unmarshal(body, &u)
 	if err != nil {
