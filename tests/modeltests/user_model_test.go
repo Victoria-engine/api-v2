@@ -1,10 +1,10 @@
 package modeltests
 
 import (
+	"github.com/Victoria-engine/api-v2/pkg/api/user/repo"
 	"log"
 	"testing"
 
-	"github.com/Victoria-engine/api-v2/pkg/models"
 	"github.com/Victoria-engine/api-v2/pkg/utl/testutils"
 	"github.com/stretchr/testify/assert"
 )
@@ -17,7 +17,7 @@ func TestSaveUser(t *testing.T) {
 		log.Fatal(err)
 	}
 
-	user := models.User{
+	user := repo.UserModel{
 		FirstName: "Test",
 		LastName:  "User",
 		Email:     "test@email.com",
