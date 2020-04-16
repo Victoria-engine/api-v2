@@ -4,8 +4,8 @@ import (
 	"log"
 	"testing"
 
-	"github.com/Victoria-engine/api-v2/app/models"
-	"github.com/Victoria-engine/api-v2/app/utils/testutils"
+	"github.com/Victoria-engine/api-v2/pkg/repo"
+	"github.com/Victoria-engine/api-v2/pkg/utils/testutils"
 	"github.com/stretchr/testify/assert"
 )
 
@@ -17,7 +17,7 @@ func TestSaveUser(t *testing.T) {
 		log.Fatal(err)
 	}
 
-	user := models.User{
+	user := repo.User{
 		FirstName: "Test",
 		LastName:  "User",
 		Email:     "test@email.com",

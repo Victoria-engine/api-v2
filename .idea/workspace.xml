@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="BranchesTreeState">
+    <expand>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="LOCAL_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="GROUP_NODE:origin" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+    </expand>
+    <select>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="GROUP_NODE:origin" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="GROUP_NODE:refactor" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+    </select>
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="9e8417ee-23c5-407a-8f85-3acbe57cb603" name="Default Changelist" comment="*&#10;- Adds LICENSE file">
+      <change afterPath="$PROJECT_DIR$/.idea/api-v2.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/auth/crypt.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/auth/crypt.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/auth/token.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/auth/token.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/middlewares/middlewares.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/middlewares/middlewares.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/models/Blog.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/repo/Blog.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/models/Post.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/repo/Post.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/models/User.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/repo/User.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/presenters/auth_presenter.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/presenters/auth_presenter.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/presenters/posts_presenters.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/presenters/posts_presenters.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/presenters/users_presenter.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/presenters/users_presenter.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/responses/json.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/utils/responses/json.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/seed/seeder.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/utils/seed/seeder.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/services/Base.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/listeners/Base.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/services/auth_listener.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/listeners/auth_listener.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/services/blogs_listener.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/listeners/blogs_listener.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/services/posts_listener.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/listeners/posts_listener.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/services/routes.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/listeners/routes.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/services/users_listener.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/listeners/users_listener.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/utils/formaterror/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/utils/formaterror/main.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/utils/testutils/testutils.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/utils/testutils/testutils.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmd/api/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/api/main.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/controllertests/base_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/tests/controllertests/base_test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/controllertests/login_controller_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/tests/controllertests/login_controller_test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/controllertests/user_controller_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/tests/controllertests/user_controller_test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/modeltests/base_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/tests/modeltests/base_test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/modeltests/user_model_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/tests/modeltests/user_model_test.go" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Go File" />
+      </list>
+    </option>
+  </component>
+  <component name="GOROOT" path="C:\Go" />
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GoLibraries">
+    <option name="indexEntireGoPath" value="false" />
+  </component>
+  <component name="ProjectId" id="1aV4SZ4G3eqsDCKVXzrNXf4p20y" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
+  <component name="ProjectViewState">
+    <option name="autoscrollFromSource" value="true" />
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
+    <property name="ASKED_SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
+    <property name="DatabaseDriversLRU" value="postgresql" />
+    <property name="DefaultGoTemplateProperty" value="Go File" />
+    <property name="GO_FMT" value="true" />
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="go.import.settings.migrated" value="true" />
+    <property name="go.sdk.automatically.set" value="true" />
+    <property name="go.tried.to.enable.integration.vgo.integrator" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="settings.editor.selected.configurable" value="preferences.keymap" />
+  </component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\Tiago\dev\projects\api-v2\pkg\utils" />
+      <recent name="C:\Users\Tiago\dev\projects\api-v2\pkg\api\user" />
+      <recent name="C:\Users\Tiago\dev\projects\api-v2\pkg\api\user\repository" />
+      <recent name="C:\Users\Tiago\dev\projects\api-v2\pkg\api\post" />
+      <recent name="C:\Users\Tiago\dev\projects\api-v2\pkg\api\auth" />
+    </key>
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="2" />
+  </component>
+  <component name="UnknownFeatures">
+    <option featureType="com.intellij.fileTypeFactory" implementationName="*.env" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="oldMeFiltersMigrated" value="true" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
+    <MESSAGE value="*&#10;- Adds LICENSE file" />
+    <MESSAGE value="*Refactors&#10;- Register route.&#10;- JSON middleware to auth routes." />
+    <MESSAGE value="Moved post service" />
+    <option name="LAST_COMMIT_MESSAGE" value="Moved post service" />
+  </component>
+  <component name="VgoProject">
+    <integration-enabled>true</integration-enabled>
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="586" y="198" key="#Inspections" timestamp="1587072633983">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="586" y="198" key="#Inspections/0.0.1920.1040@0.0.1920.1040" timestamp="1587072633983" />
+    <state x="552" y="161" key="#Plugins" timestamp="1586880403554">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="552" y="161" key="#Plugins/0.0.1920.1040@0.0.1920.1040" timestamp="1586880403554" />
+    <state x="552" y="178" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1586881588662">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="552" y="178" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1586881588662" />
+    <state x="729" y="322" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1586973119395">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="729" y="322" key="#com.intellij.fileTypes.FileTypeChooser/0.0.1920.1040@0.0.1920.1040" timestamp="1586973119395" />
+    <state x="690" y="267" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1586973141850">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="690" y="267" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1586973141850" />
+    <state x="92" y="92" width="1736" height="856" key="DiffContextDialog" timestamp="1586884454166">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="92" y="92" width="1736" height="856" key="DiffContextDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1586884454166" />
+    <state x="746" y="222" key="RollbackChangesDialog" timestamp="1587075833891">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="746" y="222" key="RollbackChangesDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1587075833891" />
+    <state x="461" y="165" key="SettingsEditor" timestamp="1586883087647">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="461" y="165" key="SettingsEditor/0.0.1920.1040@0.0.1920.1040" timestamp="1586883087647" />
+    <state width="556" height="446" key="SwitcherDM" timestamp="1586968321217">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="556" height="446" key="SwitcherDM/0.0.1920.1040@0.0.1920.1040" timestamp="1586968321217" />
+    <state x="552" y="240" key="Vcs.Push.Dialog.v2" timestamp="1586893731586">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="552" y="240" key="Vcs.Push.Dialog.v2/0.0.1920.1040@0.0.1920.1040" timestamp="1586893731586" />
+    <state x="858" y="380" key="com.intellij.database.actions.DdlActions$CreateObject$1" timestamp="1586879673561">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="858" y="380" key="com.intellij.database.actions.DdlActions$CreateObject$1/0.0.1920.1040@0.0.1920.1040" timestamp="1586879673561" />
+    <state x="830" y="407" width="316" height="244" key="com.intellij.database.actions.DdlActions$DeleteProvider2$1" timestamp="1587073774618">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="830" y="407" width="316" height="244" key="com.intellij.database.actions.DdlActions$DeleteProvider2$1/0.0.1920.1040@0.0.1920.1040" timestamp="1587073774618" />
+    <state x="758" y="188" key="com.intellij.database.view.ui.AbstractDbRefactoringDialog" timestamp="1586883652023">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="758" y="188" key="com.intellij.database.view.ui.AbstractDbRefactoringDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1586883652023" />
+    <state x="667" y="122" width="585" height="795" key="find.popup" timestamp="1587073412180">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="667" y="122" width="585" height="795" key="find.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1587073412180" />
+    <state x="623" y="225" width="672" height="678" key="search.everywhere.popup" timestamp="1587076896894">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="623" y="225" width="672" height="678" key="search.everywhere.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1587076896894" />
+  </component>
+</project>

@@ -3,14 +3,15 @@ package api
 import (
 	"flag"
 	"fmt"
+	"github.com/Victoria-engine/api-v2/pkg/utils/seed"
 	"log"
 	"os"
 
-	"github.com/Victoria-engine/api-v2/app/services"
+	"github.com/Victoria-engine/api-v2/pkg/listeners"
 	"github.com/joho/godotenv"
 )
 
-var server = services.Server{}
+var server = listeners.Server{}
 
 // Run : Runs the REST API
 func Run() {
@@ -38,7 +39,7 @@ func Run() {
 	)
 
 	// Seed in case you need dummy data
-	//seed.Load(server.DB)
+	seed.Load(server.DB)
 
 	server.Run(fmt.Sprintf(":%s", *port))
 }

@@ -6,7 +6,7 @@ import (
 	"log"
 	"testing"
 
-	"github.com/Victoria-engine/api-v2/app/utils/testutils"
+	"github.com/Victoria-engine/api-v2/pkg/utils/testutils"
 	"github.com/stretchr/testify/assert"
 )
 
