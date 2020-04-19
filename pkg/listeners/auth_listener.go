@@ -107,7 +107,7 @@ func (server *Server) Register(w http.ResponseWriter, r *http.Request) {
 
 	freshUser, err := user.SaveUser(server.DB)
 	if err != nil {
-		responses.ERROR(w, http.StatusUnprocessableEntity, fmt.Errorf("User email already exists"))
+		responses.ERROR(w, http.StatusUnprocessableEntity, fmt.Errorf("user email already exists"))
 		return
 	}
 

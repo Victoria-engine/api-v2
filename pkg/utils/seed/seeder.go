@@ -25,11 +25,10 @@ var users = []repo.User{
 }
 
 var blog = repo.Blog{
-	Name: "Mighty Dev Blog",
+	Name:        "Mighty Dev Blog",
 	Description: "Where the adventure starts!",
-	Key: "adioj1m3913mdoasdol1dj1ld1jdlçasjdçld",
+	APIKey:      "adioj1m3913mdoasdol1dj1ld1jdlçasjdçld",
 }
-
 
 var posts = []repo.Post{
 	{
@@ -54,11 +53,11 @@ func Load(db *gorm.DB) {
 		log.Fatalf("cannot migrate table: %v", err)
 	}
 
-/*	err = db.Debug().Model(&repo.Post{}).AddForeignKey("author_id", "users(id)", "cascade", "cascade").Error
-	if err != nil {
-		log.Fatalf("attaching foreign key error: %v", err)
-	}
-*/
+	/*	err = db.Debug().Model(&repo.Post{}).AddForeignKey("author_id", "users(id)", "cascade", "cascade").Error
+		if err != nil {
+			log.Fatalf("attaching foreign key error: %v", err)
+		}
+	*/
 	for u := range users {
 		err = db.Debug().Model(&repo.User{}).Create(&users[u]).Error
 		if err != nil {

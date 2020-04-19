@@ -129,7 +129,7 @@ func (u *User) FindUserByID(db *gorm.DB, uid uint) (*User, error) {
 	}
 
 	if gorm.IsRecordNotFoundError(err) {
-		return &User{}, errors.New("User Not Found")
+		return &User{}, errors.New("user Not Found")
 	}
 
 	return u, err

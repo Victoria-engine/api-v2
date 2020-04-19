@@ -29,7 +29,7 @@ func (server *Server) SavePost(w http.ResponseWriter, r *http.Request) {
 	// Decode the token
 	userID, err := auth.ExtractTokenID(r)
 	if err != nil {
-		log.Fatalf("Failed to extract token from request: %v", err)
+		log.Fatalf("failed to extract token from request: %v", err)
 	}
 
 	// Get the user blog
@@ -37,7 +37,7 @@ func (server *Server) SavePost(w http.ResponseWriter, r *http.Request) {
 	owner, err := userModel.FindUserByID(server.DB, userID)
 	if err != nil {
 		log.Println(err)
-		responses.ERROR(w, http.StatusUnprocessableEntity, errors.New("Post owner (user) does not exist: "+err.Error()))
+		responses.ERROR(w, http.StatusUnprocessableEntity, errors.New("post owner (user) does not exist: "+err.Error()))
 		return
 	}
 
@@ -59,7 +59,7 @@ func (server *Server) SavePost(w http.ResponseWriter, r *http.Request) {
 
 	// If the user doesnt have a blog, he cannot create posts
 	if owner.BlogID <= 0 {
-		responses.ERROR(w, http.StatusUnprocessableEntity, errors.New("User does not belong to a blog"))
+		responses.ERROR(w, http.StatusUnprocessableEntity, errors.New("user does not belong to a blog"))
 		return
 	}
 
@@ -69,7 +69,7 @@ func (server *Server) SavePost(w http.ResponseWriter, r *http.Request) {
 	_, err = freshPost.SavePost(server.DB)
 	if err != nil {
 		log.Println(err)
-		responses.ERROR(w, http.StatusUnprocessableEntity, errors.New("Error saving the post: "+err.Error()))
+		responses.ERROR(w, http.StatusUnprocessableEntity, errors.New("error saving the post: "+err.Error()))
 		return
 	}
 

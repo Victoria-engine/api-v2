@@ -50,7 +50,7 @@ func (p *Post) SavePost(db *gorm.DB) (*Post, error) {
 	if p.ID != 0 {
 		err = db.Debug().Model(&User{}).Where("id = ?", p.Author.ID).Take(&p.Author).Error
 		if err != nil {
-			return &Post{}, errors.New("Cannot attach post to user becauser user does not exist " + err.Error())
+			return &Post{}, errors.New("cannot attach post to user because user does not exist " + err.Error())
 		}
 	}
 
@@ -60,7 +60,7 @@ func (p *Post) SavePost(db *gorm.DB) (*Post, error) {
 // FindAllPosts : Finds all posts in the table
 func (p *Post) FindAllPosts(db *gorm.DB) (*[]Post, error) {
 	var err error
-	posts := []Post{}
+	var posts []Post
 
 	err = db.Debug().Model(&Post{}).Limit(100).Find(&posts).Error
 	if err != nil {
