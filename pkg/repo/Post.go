@@ -57,8 +57,8 @@ func (p *Post) SavePost(db *gorm.DB) (*Post, error) {
 	return p, nil
 }
 
-// FindAllPosts : Finds all posts in the table
-func (p *Post) FindAllPosts(db *gorm.DB) (*[]Post, error) {
+// GetAll : Finds all posts in the table
+func (p *Post) GetAll(db *gorm.DB) (*[]Post, error) {
 	var err error
 	var posts []Post
 
@@ -78,20 +78,14 @@ func (p *Post) FindAllPosts(db *gorm.DB) (*[]Post, error) {
 	return &posts, nil
 }
 
-// FindPostByID : Find a post by ID
-func (p *Post) FindPostByID(db *gorm.DB, pid uint64) (*Post, error) {
+// GetPostByID : Find a post by ID
+func (p *Post) GetPostByID(db *gorm.DB, pid uint64) (*Post, error) {
 	var err error
 	err = db.Debug().Model(&Post{}).Where("id = ?", pid).Take(&p).Error
 	if err != nil {
 		return &Post{}, err
 	}
 
-	if p.ID != 0 {
-		err = db.Debug().Model(&User{}).Where("id = ?", p.Author.ID).Take(&p.Author).Error
-		if err != nil {
-			return &Post{}, err
-		}
-	}
 	return p, nil
 }
 

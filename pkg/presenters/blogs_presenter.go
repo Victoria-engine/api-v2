@@ -8,6 +8,7 @@ import (
 
 // SaveBlogResponse : SaveBlog Response
 type SaveBlogResponse struct {
+	ID          uint                `json:"id"`
 	Name        string              `json:"title"`
 	Description string              `json:"content"`
 	CreatedAt   time.Time           `json: "created_at"`
@@ -16,33 +17,48 @@ type SaveBlogResponse struct {
 	Author      GetUserInfoResponse `json: "author"`
 	AuthorID    uint                `json:"author_id"`
 	APIKey      string              `json:"key"`
-	Locale      string              `json:"locale"`
 	Posts       []repo.Post         `json:"posts"`
 }
 
+// GetBlogResponse :: GetBlog Response
+type GetBlogResponse struct {
+	Name        string      `json:"title"`
+	Description string      `json:"content"`
+	Posts       []repo.Post `json:"posts"`
+}
+
 // SaveBlogPresenter : SaveBlog Presenter
-func SaveBlogPresenter(p repo.Blog) SaveBlogResponse {
+func SaveBlogPresenter(b repo.Blog) SaveBlogResponse {
 	authorData := GetUserInfoResponse{
-		BlogID:    p.Author.BlogID,
-		CreatedAt: p.Author.CreatedAt,
-		DeletedAt: p.Author.DeletedAt,
-		Email:     p.Author.Email,
-		FirstName: p.Author.FirstName,
-		LastName:  p.Author.LastName,
-		ID:        p.Author.ID,
-		UpdatedAt: p.Author.UpdatedAt,
+		BlogID:    b.Author.BlogID,
+		CreatedAt: b.Author.CreatedAt,
+		DeletedAt: b.Author.DeletedAt,
+		Email:     b.Author.Email,
+		FirstName: b.Author.FirstName,
+		LastName:  b.Author.LastName,
+		ID:        b.Author.ID,
+		UpdatedAt: b.Author.UpdatedAt,
 	}
 
 	return SaveBlogResponse{
-		p.Name,
-		p.Description,
-		p.CreatedAt,
-		p.DeletedAt,
-		p.UpdatedAt,
+		b.ID,
+		b.Name,
+		b.Description,
+		b.CreatedAt,
+		b.DeletedAt,
+		b.UpdatedAt,
 		authorData,
-		p.AuthorID,
-		p.APIKey,
-		p.Locale,
-		p.Posts,
+		b.AuthorID,
+		b.APIKey,
+		b.Posts,
+	}
+}
+
+// GetBlogPresenter : GetBlog Presenter
+func GetBlogPresenter(b repo.Blog) GetBlogResponse {
+	return GetBlogResponse{
+		b.Name,
+		b.Description,
+		b.Posts,
 	}
 }

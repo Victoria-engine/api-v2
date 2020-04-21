@@ -11,14 +11,10 @@ import (
 	"github.com/Victoria-engine/api-v2/pkg/presenters"
 	"github.com/Victoria-engine/api-v2/pkg/repo"
 	"github.com/google/uuid"
+	"github.com/gorilla/mux"
 
 	"github.com/Victoria-engine/api-v2/pkg/utils/responses"
 )
-
-// GetBlogData : Return the blog data
-func (server *Server) GetBlogData(w http.ResponseWriter, r *http.Request) {
-	responses.JSON(w, http.StatusNoContent, "not implemented")
-}
 
 // CreateBlog : Creates a new blog
 func (server *Server) CreateBlog(w http.ResponseWriter, r *http.Request) {
@@ -48,6 +44,12 @@ func (server *Server) CreateBlog(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	// Check if user already has a blog
+	if owner.BlogID != 0 {
+		responses.ERROR(w, http.StatusBadRequest, errors.New("user already has a blog"))
+		return
+	}
+
 	// Create a new blog entry
 	freshBlog := repo.Blog{}
 
@@ -73,7 +75,6 @@ func (server *Server) CreateBlog(w http.ResponseWriter, r *http.Request) {
 
 	freshBlog.APIKey = uuid.String()
 	freshBlog.AuthorID = owner.ID
-	freshBlog.Author = *owner
 
 	createdBlog, err := freshBlog.Save(server.DB)
 	if err != nil {
@@ -82,7 +83,40 @@ func (server *Server) CreateBlog(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	createdBlog.Author = *owner
+
 	res := presenters.SaveBlogPresenter(createdBlog)
+
+	responses.JSON(w, 200, res)
+}
+
+// GetBlog : Request made when accessing a blog
+func (server *Server) GetBlog(w http.ResponseWriter, r *http.Request) {
+	if r.Method != http.MethodGet {
+		w.WriteHeader(405) // method not allowed
+		return
+	}
+
+	vars := mux.Vars(r)
+	apiKey := vars["apiKey"]
+
+	if apiKey == "" {
+		log.Println("missing api key in request")
+		responses.ERROR(w, http.StatusUnprocessableEntity, errors.New("missing api id in request"))
+		return
+	}
+
+	blog := repo.Blog{}
+
+	// Find a blog by api key
+	foundBlog, err := blog.GetByAPIKey(server.DB, apiKey)
+	if err != nil {
+		log.Println(err)
+		responses.ERROR(w, http.StatusUnprocessableEntity, errors.New("error getting the blog: "+err.Error()))
+		return
+	}
+
+	res := presenters.GetBlogPresenter(foundBlog)
 
 	responses.JSON(w, 200, res)
 }

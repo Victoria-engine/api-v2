@@ -9,14 +9,11 @@ func (server *Server) initializeRoutes() {
 
 	//// Content routes
 	contentRoutes := server.Router.PathPrefix("/api/content").Subrouter()
+
 	// Blog
 	blogRoutes := contentRoutes.PathPrefix("/blog").Subrouter()
 
-	blogRoutes.HandleFunc("",
-		middlewares.SetMiddlewareJSON(
-			middlewares.SetMiddlewareAuthentication(server.GetBlogData),
-		),
-	).Methods("GET")
+	blogRoutes.HandleFunc("/{apiKey}", middlewares.SetMiddlewareJSON(server.GetBlog)).Methods("GET")
 	blogRoutes.HandleFunc("",
 		middlewares.SetMiddlewareJSON(
 			middlewares.SetMiddlewareAuthentication(server.CreateBlog),

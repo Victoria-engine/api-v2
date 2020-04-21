@@ -12,8 +12,8 @@ import (
 // Blog : Post data structure
 type Blog struct {
 	gorm.Model         // Inject fields `ID`, `CreatedAt`, `UpdatedAt`, `DeletedAt` into the model
-	Name        string `gorm:"size:255;not null;unique" json:"name"`
-	Description string `gorm:"size:255;not null;unique" json:"description"`
+	Name        string `gorm:"size:255;not null;" json:"name"`
+	Description string `gorm:"size:255;not null;" json:"description"`
 	Author      User   `json:"author" json:"author"`
 	AuthorID    uint   `"gorm":"not null" json:"author_id"`
 	APIKey      string `"gorm: unique"json:"api_key"`
@@ -46,9 +46,32 @@ func (b *Blog) Validate() error {
 	return nil
 }
 
+// Save : Creates a new blog entry
 func (b *Blog) Save(db *gorm.DB) (Blog, error) {
 	var err error
 	err = db.Debug().Model(&Blog{}).Create(&b).Error
+	if err != nil {
+		return Blog{}, err
+	}
+
+	return *b, nil
+}
+
+// GetByID : Find a blog and returns by ID
+func (b *Blog) GetByID(db *gorm.DB, id uint64) (Blog, error) {
+	var err error
+	err = db.Debug().Model(&Blog{}).Where("id = ?", id).Take(&b).Error
+	if err != nil {
+		return Blog{}, err
+	}
+
+	return *b, nil
+}
+
+// GetByAPIKey : Find a blog and return by API key
+func (b *Blog) GetByAPIKey(db *gorm.DB, APIKey string) (Blog, error) {
+	var err error
+	err = db.Debug().Model(&Blog{}).Where("api_key = ?", APIKey).Take(&b).Error
 	if err != nil {
 		return Blog{}, err
 	}

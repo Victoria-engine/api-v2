@@ -3,7 +3,6 @@ package api
 import (
 	"flag"
 	"fmt"
-	"github.com/Victoria-engine/api-v2/pkg/utils/seed"
 	"log"
 	"os"
 
@@ -39,7 +38,7 @@ func Run() {
 	)
 
 	// Seed in case you need dummy data
-	seed.Load(server.DB)
+	//seed.Load(server.DB)
 
 	server.Run(fmt.Sprintf(":%s", *port))
 }
